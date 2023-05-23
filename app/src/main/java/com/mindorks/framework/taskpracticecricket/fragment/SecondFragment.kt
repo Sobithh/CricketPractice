@@ -5,9 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.mindorks.framework.taskpracticecricket.BottomSheetFragment
 import com.mindorks.framework.taskpracticecricket.R
 import com.mindorks.framework.taskpracticecricket.adapter.DataAdapter
 import com.mindorks.framework.taskpracticecricket.mainviewmodel.MainActivityViewModel
@@ -36,7 +39,12 @@ class SecondFragment : Fragment() {
 
         val recyclerView : RecyclerView = view.findViewById(R.id.second_fragment)
 
-        val adapter = DataAdapter()
+        val adapter = DataAdapter(
+            onPlayerClick = {player->
+                val bottomSheetDialog = BottomSheetFragment(player)
+                bottomSheetDialog.show(childFragmentManager, "bottomSheetTag")
+            }
+        )
 
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -50,6 +58,22 @@ class SecondFragment : Fragment() {
             }
             adapter.setData(playerList)
         }
+
+//        adapter.onItemClick = {
+//
+//            val dialog = BottomSheetDialog(requireActivity())
+//
+//            val view = layoutInflater.inflate(R.layout.fragment_details, null)
+//            val btnClose = view.findViewById<Button>(R.id.dismiss)
+//            btnClose.setOnClickListener {
+//                dialog.dismiss()
+//            }
+//            dialog.setCancelable(true)
+//            dialog.setCanceledOnTouchOutside(true)
+//            dialog.setContentView(view)
+//            dialog.show()
+//
+//        }
 
     }
 
